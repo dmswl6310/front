@@ -13,18 +13,14 @@ function App() {
   }, []);
 
   const addItem = (item) => {
-    item.id = "ID-" + items.length;
-    item.done = false;
-    setItems([...items, item]);
-    console.log("items : ", items);
+    call("/todo", "POST", item).then((response) => setItems(response.data));
   };
 
   const deleteItem = (item) => {
-    const newItems = items.filter((e) => e.id != item.id);
-    setItems([...newItems]);
+    call("/todo", "DELETE", item).then((response) => setItems(response.data));
   };
 
-  const editItem = () => {
+  const editItem = (item) => {
     call("/todo", "PUT", item).then((response) => setItems(response.data));
   };
 
