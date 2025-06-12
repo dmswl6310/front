@@ -1,11 +1,23 @@
 import "./App.css";
 import Todo from "./Todo";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, List, Paper } from "@mui/material";
+import { call } from "./service/ApiService";
 import AddTodo from "./AddTodo";
 
 function App() {
   const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    call("/todo", "GET", null).then((response) => setItems(response.data));
+  }, []);
+
+  const addItem = (item) => {
+    item.id = "ID-" + items.length;
+    item.done = false;
+    setItems([...items, item]);
+    console.log("items : ", items);
+  };
 
   const deleteItem = (item) => {
     const newItems = items.filter((e) => e.id != item.id);
@@ -13,7 +25,7 @@ function App() {
   };
 
   const editItem = () => {
-    setItems([...items]);
+    call("/todo", "PUT", item).then((response) => setItems(response.data));
   };
 
   let todoItems = items.length > 0 && (
@@ -30,13 +42,6 @@ function App() {
       </List>
     </Paper>
   );
-
-  const addItem = (item) => {
-    item.id = "ID-" + items.length;
-    item.done = false;
-    setItems([...items, item]);
-    console.log("items : ", items);
-  };
 
   return (
     <div className="App">
