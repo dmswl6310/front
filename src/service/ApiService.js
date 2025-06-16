@@ -47,3 +47,8 @@ export function signin(userDTO){
       }
     });
   }
+
+  export function signout(u){
+    localStorage.setItem("ACCESS_TOKEN",null);
+    window.location.href="./login";
+  }
