@@ -7,9 +7,13 @@ import AddTodo from "./AddTodo";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   useEffect(() => {
-    call("/todo", "GET", null).then((response) => setItems(response.data));
+    call("/todo", "GET", null).then((response) => {
+      setItems(response.data)
+      setLoading(false)
+  });
   }, []);
 
   const addItem = (item) => {
@@ -56,7 +60,7 @@ function App() {
     </Paper>
   );
 
-  return (
+  let todoListPage=(
     <div className="App">
       {navigationBar}
       <Container maxWidth="md">
@@ -65,6 +69,14 @@ function App() {
       </Container>
     </div>
   );
+
+  let loadingPage=<h1>로딩중..</h1>;
+  let content=loadingPage;
+  if(!loading){
+    content=todoListPage;
+  }
+  return <div className="App">{content}</div>
+
 }
 
 export default App;
