@@ -10,6 +10,7 @@ const SignUp = () => {
     const username = data.get("username");
     const password = data.get("password");
     signup({ username: username, password: password }).then((response) => {
+      if (!response) alert("가입 실패");
       window.location.href = "/login";
     });
   };
