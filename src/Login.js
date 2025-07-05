@@ -57,23 +57,23 @@ const Login = () => {
               로그인
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              style={{ backgroundColor: "#000" }}
-              onClick={() => handleSocialLogin("github")}
-            >
-              깃허브로 로그인
-            </Button>
-          </Grid>
-          <Grid item>
-            <Link to="/signup" variant="body2">
-              계정이 없습니까? 여기서 가입하세요.
-            </Link>
-          </Grid>
         </Grid>
       </form>
+      <Grid item xs={12}>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ backgroundColor: "#000" }}
+          onClick={() => handleSocialLogin("github")}
+        >
+          깃허브로 로그인
+        </Button>
+      </Grid>
+      <Grid item>
+        <Link to="/signup" variant="body2">
+          계정이 없습니까? 여기서 가입하세요.
+        </Link>
+      </Grid>
     </Container>
   );
 };
