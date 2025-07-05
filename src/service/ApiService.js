@@ -26,20 +26,23 @@ export function call(api, method, request) {
         return response.json();
       } else if (response.status == 403) {
         window.location.href = "/login"; // redirect
+        return;
       } else {
-        Promise.reject(response);
-        throw Error(response);
+        const error = new Error("http error! " + response.status);
+        throw error;
       }
     })
     .catch((error) => {
-      console.log("http error");
       console.log(error);
+      return null;
     });
 }
 
 export function signin(userDTO) {
   return call("/auth/signin", "POST", userDTO).then((response) => {
-    if (response.token) {
+    if (!response) {
+      alert("로그인 실패!");
+    } else if (response.token) {
       // 로컬스토리지에 토큰 저장
       localStorage.setItem("ACCESS_TOKEN", response.token);
       window.location.href = "/";
