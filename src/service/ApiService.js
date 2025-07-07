@@ -66,5 +66,5 @@ export function socialLogin(provider) {
     "/auth/authorize/" +
     provider +
     "?redirect_url=" +
-    frontendUrl;
+    encodeURIComponent(frontendUrl);
 }
