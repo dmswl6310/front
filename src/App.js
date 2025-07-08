@@ -1,19 +1,30 @@
 import "./App.css";
 import Todo from "./Todo";
 import React, { useState, useEffect } from "react";
-import { Container, List, Paper,Grid,Button,AppBar,Toolbar,Typography } from "@mui/material";
-import { call,signout } from "./service/ApiService";
+import {
+  Container,
+  List,
+  Paper,
+  Grid,
+  Button,
+  AppBar,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { call, signout } from "./service/ApiService";
 import AddTodo from "./AddTodo";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     call("/todo", "GET", null).then((response) => {
-      setItems(response.data)
-      setLoading(false)
-  });
+      if (!response) {
+        setItems(response.data);
+        setLoading(false);
+      }
+    });
   }, []);
 
   const addItem = (item) => {
@@ -28,7 +39,7 @@ function App() {
     call("/todo", "PUT", item).then((response) => setItems(response.data));
   };
 
-  let navigationBar=(
+  let navigationBar = (
     <AppBar position="static">
       <Toolbar>
         <Grid jusifyContent="space-between" container>
@@ -60,7 +71,7 @@ function App() {
     </Paper>
   );
 
-  let todoListPage=(
+  let todoListPage = (
     <div className="App">
       {navigationBar}
       <Container maxWidth="md">
@@ -70,13 +81,12 @@ function App() {
     </div>
   );
 
-  let loadingPage=<h1>로딩중..</h1>;
-  let content=loadingPage;
-  if(!loading){
-    content=todoListPage;
+  let loadingPage = <h1>로딩중..</h1>;
+  let content = loadingPage;
+  if (!loading) {
+    content = todoListPage;
   }
-  return <div className="App">{content}</div>
-
+  return <div className="App">{content}</div>;
 }
 
 export default App;
