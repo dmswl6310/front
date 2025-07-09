@@ -20,13 +20,12 @@ function App() {
 
   useEffect(() => {
     call("/todo", "GET", null).then((response) => {
-      if (response != null) {
+      if (response) {
         setItems(response.data);
         setLoading(false);
       }
-    }),
-      [];
-  });
+    });
+  }, []);
 
   const addItem = (item) => {
     call("/todo", "POST", item).then((response) => setItems(response.data));
